@@ -25,7 +25,7 @@ def jplag_score_func(test, source, language):
     test = "jplag_test_dir"
     source = "jplag_source_dir"
     
-    command = "java -jar jplag-4.1.0-jar-with-dependencies.jar -l " + flag_l + " -r " + "jplag_results" + " -new " + test + " -old " + "jplag_source_dir" + " > jplag_output.txt"
+    command = "/usr/lib/jvm/java-17-openjdk-amd64/bin/java -jar jplag-4.1.0-jar-with-dependencies.jar -l " + flag_l + " -r " + "jplag_results" + " -new " + test + " -old " + "jplag_source_dir" + " > jplag_output.txt"
 
     try:
         subprocess.call(command, shell=True)
@@ -36,11 +36,13 @@ def jplag_score_func(test, source, language):
         for line in file:
             if "Comparing jplag_test_dir" in line:
                 jplag_score = float(line.split(":")[3].replace(" ", ""))
+            if "ERROR" in line:
+                return -1
 
     # Delete the temporary files
     subprocess.call("rm -rf jplag_test_dir", shell=True)
     subprocess.call("rm -rf jplag_source_dir", shell=True)
-    subprocess.call("rm -rf jplag_output.txt", shell=True)
+    # subprocess.call("rm -rf jplag_output.txt", shell=True)
     subprocess.call("rm -rf " + "jplag_results" + "_unzip", shell=True)
     subprocess.call("rm -rf " + "jplag_results" + ".zip", shell=True)
 
