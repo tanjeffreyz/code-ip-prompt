@@ -5,14 +5,6 @@ def jplag_score_func(test, source, language):
 
     jplag_score = 0
 
-    if not os.path.exists("jplag_test_dir"):
-        subprocess.call("mkdir -p jplag_test_dir", shell=True)
-    subprocess.call("cp " + test + " jplag_test_dir", shell=True)
-
-    if not os.path.exists("jplag_source_dir"):
-        subprocess.call("mkdir -p jplag_source_dir", shell=True)
-    subprocess.call("cp " + source + " jplag_source_dir", shell=True)
-
     if language == "cpp":
         flag_l = "cpp"
     elif language == "python":
